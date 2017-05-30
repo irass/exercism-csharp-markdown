@@ -57,16 +57,12 @@ public static class Markdown
         string headerTag = "h" + count;
         string headerHtml = Wrap(markdown.Substring(count + 1), headerTag);
 
+        inListAfter = false;
+
         if (list)
-        {
-            inListAfter = false;
             return "</ul>" + headerHtml;
-        }
         else
-        {
-            inListAfter = false;
             return headerHtml;
-        }
     }
 
     private static string ParseLineItem(string markdown, bool list, out bool inListAfter)
@@ -74,17 +70,12 @@ public static class Markdown
         if (markdown.StartsWith("*"))
         {
             string innerHtml = Wrap(ParseText(markdown.Substring(2), true), "li");
+            inListAfter = true;
 
             if (list)
-            {
-                inListAfter = true;
                 return innerHtml;
-            }
             else
-            {
-                inListAfter = true;
                 return "<ul>" + innerHtml;
-            }
         }
 
         inListAfter = list;
@@ -93,16 +84,12 @@ public static class Markdown
 
     private static string ParseParagraph(string markdown, bool list, out bool inListAfter)
     {
+        inListAfter = false;
+
         if (!list)
-        {
-            inListAfter = false;
             return ParseText(markdown, list);
-        }
         else
-        {
-            inListAfter = false;
             return "</ul>" + ParseText(markdown, list);
-        }
     }
 
     private static string ParseLine(string markdown, bool list, out bool inListAfter)
