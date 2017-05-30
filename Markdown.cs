@@ -9,8 +9,8 @@ public static class Markdown
 
     private static string Parse(string markdown, string delimiter, string tag)
     {
-        var pattern = delimiter + "(.+)" + delimiter;
-        var replacement = "<" + tag + ">$1</" + tag + ">";
+        string pattern = delimiter + "(.+)" + delimiter;
+        string replacement = "<" + tag + ">$1</" + tag + ">";
         return Regex.Replace(markdown, pattern, replacement);
     }
 
@@ -20,7 +20,7 @@ public static class Markdown
 
     private static string ParseText(string markdown, bool list)
     {
-        var parsedText = Parse_(Parse__((markdown)));
+        string parsedText = Parse_(Parse__((markdown)));
 
         if (list)
         {
@@ -34,7 +34,7 @@ public static class Markdown
 
     private static string ParseHeader(string markdown, bool list, out bool inListAfter)
     {
-        var count = 0;
+        int count = 0;
 
         for (int i = 0; i < markdown.Length; i++)
         {
@@ -54,8 +54,8 @@ public static class Markdown
             return null;
         }
 
-        var headerTag = "h" + count;
-        var headerHtml = Wrap(markdown.Substring(count + 1), headerTag);
+        string headerTag = "h" + count;
+        string headerHtml = Wrap(markdown.Substring(count + 1), headerTag);
 
         if (list)
         {
@@ -73,7 +73,7 @@ public static class Markdown
     {
         if (markdown.StartsWith("*"))
         {
-            var innerHtml = Wrap(ParseText(markdown.Substring(2), true), "li");
+            string innerHtml = Wrap(ParseText(markdown.Substring(2), true), "li");
 
             if (list)
             {
@@ -107,7 +107,7 @@ public static class Markdown
 
     private static string ParseLine(string markdown, bool list, out bool inListAfter)
     {
-        var result = ParseHeader(markdown, list, out inListAfter);
+        string result = ParseHeader(markdown, list, out inListAfter);
 
         if (result == null)
         {
@@ -129,13 +129,13 @@ public static class Markdown
 
     public static string Parse(string markdown)
     {
-        var lines = markdown.Split('\n');
-        var result = "";
-        var list = false;
+        string[] lines = markdown.Split('\n');
+        string result = "";
+        bool list = false;
 
         for (int i = 0; i < lines.Length; i++)
         {
-            var lineResult = ParseLine(lines[i], list, out list);
+            string lineResult = ParseLine(lines[i], list, out list);
             result += lineResult;
         }
 
