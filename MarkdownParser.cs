@@ -88,14 +88,14 @@ namespace MarkdownToHTML
                 if (GetMatchingTagFromDictionary(_dictForParentTags, input, TagDictionaryType.Parent, out tag, out numberOfCharactersToSubstitute))
                     newTagType = NewTagType.Parent;
 
-            else if (GetMatchingTagFromDictionary(_dictForLineTags, input, TagDictionaryType.Line, out tag, out numberOfCharactersToSubstitute))
+            if (tag == null && GetMatchingTagFromDictionary(_dictForLineTags, input, TagDictionaryType.Line, out tag, out numberOfCharactersToSubstitute))
                 newTagType = NewTagType.Line;
 
-            else if (string.IsNullOrEmpty(lineTag) && string.IsNullOrEmpty(parentTag) && !parentTagExists)
+            if (tag == null && string.IsNullOrEmpty(lineTag) && string.IsNullOrEmpty(parentTag) && !parentTagExists)
                 if (GetMatchingTagFromDictionary(_dictForParagraphTag, input, TagDictionaryType.Paragraph, out tag, out numberOfCharactersToSubstitute))
                     newTagType = NewTagType.Parent;
 
-            else if (GetMatchingTagFromDictionary(_dictForWordTags, input, TagDictionaryType.Word, out tag, out numberOfCharactersToSubstitute))
+            if (tag == null && GetMatchingTagFromDictionary(_dictForWordTags, input, TagDictionaryType.Word, out tag, out numberOfCharactersToSubstitute))
                 newTagType = NewTagType.Word;
 
             if (tag != null)
