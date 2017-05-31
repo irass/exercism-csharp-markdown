@@ -26,9 +26,27 @@ namespace MarkdownToHTML
         }
 
         [Fact]
+        public void Parsing_italics2()
+        {
+            string input = "*This will be italic*";
+            string expected = "<p><em>This will be italic</em></p>";
+
+            Assert.Equal(expected, MarkdownParser.Parse(input));
+        }
+
+        [Fact]
         public void Parsing_bold_text()
         {
             string input = "__This will be bold__";
+            string expected = "<p><strong>This will be bold</strong></p>";
+
+            Assert.Equal(expected, MarkdownParser.Parse(input));
+        }
+
+        [Fact]
+        public void Parsing_bold_text2()
+        {
+            string input = "**This will be bold**";
             string expected = "<p><strong>This will be bold</strong></p>";
 
             Assert.Equal(expected, MarkdownParser.Parse(input));
@@ -91,6 +109,7 @@ namespace MarkdownToHTML
         #endregion
 
         #region Helpers
+
 
 
         #endregion
