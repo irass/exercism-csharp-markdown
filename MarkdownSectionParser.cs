@@ -41,14 +41,12 @@ namespace MarkdownToHTML
         {
             result = AddClosingTag(result, _openWordTag);
             result = AddClosingTag(result, _openLineTag);
-
             return result + ParseNextSection(currentIndex + 1, NewTagType.None, null, null);
         }
 
         private string DealWithClosingWordTag(string result, int currentIndex, int lengthToSkip)
         {
             result = AddClosingTag(result, _openWordTag);
-
             return result + ParseNextSection(currentIndex + lengthToSkip, NewTagType.Line, _openLineTag, _openLineTag);
         }
 
@@ -66,15 +64,24 @@ namespace MarkdownToHTML
             return result;
         }
 
+        private string DealWithEndOfSection(string result)
+        {
+            result = AddClosingTag(result, _openLineTag);
+            result = AddClosingTag(result, _openParentTag);
+            _parentTagExists = false;
+
+            return result;
+        }
+
         public string Parse()
         {
             string result = "";
             int currentIndex = 0;
-            int lengthToSkip = 0;
-            NewTagType newTagType;
 
             while (currentIndex < _markdownInput.Length)
             {
+                int lengthToSkip = 0;
+
                 if (_markdownInput[currentIndex] == '\n')
                     return DealWithNewLine(result, currentIndex);
 
@@ -83,6 +90,7 @@ namespace MarkdownToHTML
 
                 else
                 {
+                    NewTagType newTagType;
                     string stringToInsert = GetStringToInsert(_markdownInput.Substring(currentIndex), _openLineTag, _openParentTag, _parentTagExists, out newTagType, out lengthToSkip);
                     result += stringToInsert;
 
@@ -95,12 +103,7 @@ namespace MarkdownToHTML
                 }
                 currentIndex++;
             }
-
-            result = AddClosingTag(result, _openLineTag);
-            result = AddClosingTag(result, _openParentTag);
-            _parentTagExists = false;
-
-            return result;
+            return DealWithEndOfSection(result);
         }
 
     }
