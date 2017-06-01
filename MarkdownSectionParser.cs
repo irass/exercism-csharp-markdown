@@ -1,6 +1,7 @@
 ﻿using System;
 using static MarkdownToHTML.Enums;
 using static MarkdownToHTML.Utils;
+using static MarkdownToHTML.Constants;
 
 namespace MarkdownToHTML
 {
@@ -65,7 +66,7 @@ namespace MarkdownToHTML
             result += ParseNextSection(currentIndex + lengthToSkip, newTagType, stringToInsert, _openLineTag);
 
             if (newTagType == NewTagType.Word)
-                ResetTags(_openWordTag, "", _openParentTag, out _openWordTag, out _openLineTag, out _openParentTag);
+                ResetTags(_openWordTag, string.Empty, _openParentTag, out _openWordTag, out _openLineTag, out _openParentTag);
 
             return result;
         }
@@ -90,7 +91,7 @@ namespace MarkdownToHTML
             {
                 int lengthToSkip = 0;
 
-                if (_markdownInput[currentIndex] == '\n')
+                if (_markdownInput[currentIndex] == NEW_LINE)
                     return DealWithNewLine(result, currentIndex);
 
                 else if (CheckIfClosingWordTag(currentIndex, _markdownInput, _openWordTag, out lengthToSkip))

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MarkdownToHTML
 {
-    public static class TagConversions
+    public static class Constants
     {
+        public const char NEW_LINE = '\n';
+
         public static readonly Dictionary<string, string> DictForLineTags = new Dictionary<string, string> {
                                                                                 { "# ", "<h1>" },
                                                                                 { "## ", "<h2>" },

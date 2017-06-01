@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using static MarkdownToHTML.Enums;
-using static MarkdownToHTML.TagConversions;
+using static MarkdownToHTML.Constants;
 
 namespace MarkdownToHTML
 {
@@ -41,7 +39,7 @@ namespace MarkdownToHTML
                     DictForWordTags[currentString] == openWordTag &&
                     !CheckStringIndexInCharList(input, currentIndex - 1, new List<char> { ' ' }))
                 {
-                    if (currentIndex + 1 >= input.Length || CheckStringIndexInCharList(input, currentIndex + 1, new List<char> { ' ', '\n' }))
+                    if (currentIndex + 1 >= input.Length || CheckStringIndexInCharList(input, currentIndex + 1, new List<char> { ' ', NEW_LINE }))
                     {
                         lengthToSkip = currentString.Length;
                         return true;
@@ -56,14 +54,14 @@ namespace MarkdownToHTML
         //Gets the matching tag from the supplied dictionary for the string provided
         public static bool GetMatchingTagFromDictionary(Dictionary<string, string> dict, string text, TagDictionaryType dictionaryUsed, out string tag, out int numberOfCharactersToSubstitute)
         {
-            string stringToSubstitute = "";
+            string stringToSubstitute = string.Empty;
             int index = 0;
             numberOfCharactersToSubstitute = 0;
             tag = null;
 
             if (dictionaryUsed == TagDictionaryType.Paragraph)
             {
-                tag = dict[""];
+                tag = dict[string.Empty];
                 return true;
             }
 
@@ -118,16 +116,16 @@ namespace MarkdownToHTML
         public static void SetUpTagsForNextSection(NewTagType newTagType, string tagToInsert, string currentLineTag, out string wordTag, out string lineTag, out string parentTag)
         {
             if (newTagType == NewTagType.Line)
-                ResetTags("", tagToInsert, "", out wordTag, out lineTag, out parentTag);
+                ResetTags(string.Empty, tagToInsert, string.Empty, out wordTag, out lineTag, out parentTag);
 
             else if (newTagType == NewTagType.Word)
-                ResetTags(tagToInsert, currentLineTag, "", out wordTag, out lineTag, out parentTag);
+                ResetTags(tagToInsert, currentLineTag, string.Empty, out wordTag, out lineTag, out parentTag);
 
             else if (newTagType == NewTagType.Parent)
-                ResetTags("", "", tagToInsert, out wordTag, out lineTag, out parentTag);
+                ResetTags(string.Empty, string.Empty, tagToInsert, out wordTag, out lineTag, out parentTag);
 
             else
-                ResetTags("", "", "", out wordTag, out lineTag, out parentTag);
+                ResetTags(string.Empty, string.Empty, string.Empty, out wordTag, out lineTag, out parentTag);
         }
 
 
