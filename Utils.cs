@@ -26,6 +26,7 @@ namespace MarkdownToHTML
                                                                                                      index < text.Length &&
                                                                                                      characters.Contains(text[index]));
 
+
         //Determines whether the next string in the input matches the currently open word tag
         public static bool CheckIfClosingWordTag(int currentIndex, string input, string openWordTag, out int lengthToSkip)
         {
@@ -50,6 +51,7 @@ namespace MarkdownToHTML
             }
             return false;
         }
+
 
         //Gets the matching tag from the supplied dictionary for the string provided
         public static bool GetMatchingTagFromDictionary(Dictionary<string, string> dict, string text, TagDictionaryType dictionaryUsed, out string tag, out int numberOfCharactersToSubstitute)
@@ -83,6 +85,7 @@ namespace MarkdownToHTML
             return false;
         }
 
+
         //Gets the appropriate string to be inserted based on input and currently open tags
         public static string GetStringToInsert(string input, string lineTag, string parentTag, bool parentTagExists, out NewTagType newTagType, out int numberOfCharactersToSubstitute)
         {
@@ -110,6 +113,7 @@ namespace MarkdownToHTML
                 return input[0].ToString();
         }
 
+
         //Sets up currently open tags for parsing the next section
         public static void SetUpTagsForNextSection(NewTagType newTagType, string tagToInsert, string currentLineTag, out string wordTag, out string lineTag, out string parentTag)
         {
@@ -125,6 +129,7 @@ namespace MarkdownToHTML
             else
                 ResetTags("", "", "", out wordTag, out lineTag, out parentTag);
         }
+
 
         //Adds appropriate closing tag based on the most recently inserted tag
         public static string AddAppropriateClosingTag(string result, NewTagType tagType, string lineTag, string parentTag)

@@ -12,6 +12,7 @@ namespace MarkdownToHTML
         private string _markdownInput;
         private bool _parentTagExists;
 
+
         public MarkdownSectionParser(string markdownInput, string openWordTag, string openLineTag, string openParentTag, bool parentTagExists)
         {
             _markdownInput = markdownInput;
@@ -20,6 +21,7 @@ namespace MarkdownToHTML
             _openParentTag = openParentTag;
             _parentTagExists = parentTagExists;
         }
+
 
         private string ParseNextSection(int startingIndex, NewTagType newTagType, string tagToInsert, string currentLineTag)
         {
@@ -36,6 +38,7 @@ namespace MarkdownToHTML
             }
         }
 
+
         //if newline - close currently open word and line tags and parse beyond
         private string DealWithNewLine(string result, int currentIndex)
         {
@@ -44,12 +47,15 @@ namespace MarkdownToHTML
             return result + ParseNextSection(currentIndex + 1, NewTagType.None, null, null);
         }
 
+
         private string DealWithClosingWordTag(string result, int currentIndex, int lengthToSkip)
         {
             result = AddClosingTag(result, _openWordTag);
             return result + ParseNextSection(currentIndex + lengthToSkip, NewTagType.Line, _openLineTag, _openLineTag);
         }
 
+
+        //if a new tag has been inserted - close any previous tags if applicable and parse beyond
         private string DealWithOpeningTag(string result, int currentIndex, int lengthToSkip, NewTagType newTagType, string stringToInsert)
         {
             if (newTagType == NewTagType.Parent)
@@ -64,6 +70,7 @@ namespace MarkdownToHTML
             return result;
         }
 
+
         private string DealWithEndOfSection(string result)
         {
             result = AddClosingTag(result, _openLineTag);
@@ -72,6 +79,7 @@ namespace MarkdownToHTML
 
             return result;
         }
+
 
         public string Parse()
         {
@@ -94,7 +102,6 @@ namespace MarkdownToHTML
                     string stringToInsert = GetStringToInsert(_markdownInput.Substring(currentIndex), _openLineTag, _openParentTag, _parentTagExists, out newTagType, out lengthToSkip);
                     result += stringToInsert;
 
-                    //if a new tag has been inserted - close any previous tags if applicable and parse beyond
                     if (newTagType != NewTagType.None)
                     {
                         result = DealWithOpeningTag(result, currentIndex, lengthToSkip, newTagType, stringToInsert);
