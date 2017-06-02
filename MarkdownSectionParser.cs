@@ -49,6 +49,7 @@ namespace MarkdownToHTML
         }
 
 
+        //if closing word tag - close currently open word tags and parse beyond
         private string DealWithClosingWordTag(string result, int currentIndex, int lengthToSkip)
         {
             result = AddClosingTag(result, _openWordTag);
@@ -84,7 +85,7 @@ namespace MarkdownToHTML
 
         public string Parse()
         {
-            string result = "";
+            string result = string.Empty;
             int currentIndex = 0;
 
             while (currentIndex < _markdownInput.Length)

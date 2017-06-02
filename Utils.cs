@@ -21,14 +21,14 @@ namespace MarkdownToHTML
         }
 
         public static bool CheckStringIndexInCharList(string text, int index, List<char> characters) => (index >= 0 &&
-                                                                                                     index < text.Length &&
-                                                                                                     characters.Contains(text[index]));
+                                                                                                         index < text.Length &&
+                                                                                                         characters.Contains(text[index]));
 
 
         //Determines whether the next string in the input matches the currently open word tag
         public static bool CheckIfClosingWordTag(int currentIndex, string input, string openWordTag, out int lengthToSkip)
         {
-            string currentString = "";
+            string currentString = string.Empty;
             lengthToSkip = 0;
 
             while (currentIndex < input.Length)
