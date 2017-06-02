@@ -7,10 +7,10 @@ namespace MarkdownToHTML
 {
     public class MarkdownSectionParser
     {
+        private readonly string _markdownInput;
         private string _openWordTag;
         private string _openLineTag;
         private string _openParentTag;
-        private string _markdownInput;
         private bool _parentTagExists;
 
 
