@@ -4,6 +4,8 @@ using static MarkdownToHTML.Constants;
 
 namespace MarkdownToHTML
 {
+    // todo: I would probably change this from a public static class, and instead take it in via composition (eg passing an instance of it in the constructor) or inheritance (eg descend from it) in classes where it is needed.
+    // todo: generally, there are quite a lot of long methods here, that would benefit from being made smaller
     public static class Utils
     {
         public static string GetClosingTag(string openingTag) => openingTag.Replace("<", "</");
@@ -12,6 +14,7 @@ namespace MarkdownToHTML
 
         public static string GetNextSection(string text, int startingIndex) => text.Substring(startingIndex);
 
+        // todo: find a solution that doesn't use out parameters
         public static void ResetTags(string newWordTag, string newLineTag, string newParentTag, out string wordTag, out string lineTag, out string parentTag)
         {
             wordTag = newWordTag;
@@ -20,9 +23,10 @@ namespace MarkdownToHTML
             return;
         }
 
-        public static bool CheckStringIndexInCharList(string text, int index, List<char> characters) => (index >= 0 &&
-                                                                                                         index < text.Length &&
-                                                                                                         characters.Contains(text[index]));
+        public static bool CheckStringIndexInCharList(string text, int index, List<char> characters) => 
+            (index >= 0 &&
+            index < text.Length &&
+            characters.Contains(text[index]));
 
 
         //Determines whether the next string in the input matches the currently open word tag

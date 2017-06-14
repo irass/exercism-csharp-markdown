@@ -2,14 +2,10 @@
 {
     public static class MarkdownParser
     {
+        // todo: remove this class as it doesn't do anything
         public static string Parse(string input)
         {
-            string wordTag = string.Empty;
-            string lineTag = string.Empty;
-            string parentTag = string.Empty;
-            bool parentTagExists = false;
-
-            return new MarkdownSectionParser(input, wordTag, lineTag, parentTag, parentTagExists).Parse();
+            return new MarkdownSectionParser(input).Parse();
         }
         
     }

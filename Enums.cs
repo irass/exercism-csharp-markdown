@@ -2,6 +2,7 @@
 {
     public class Enums
     {
+        //todo: prob wants a better name, what is this?
         public enum TagDictionaryType
         {
             Parent = 0,
@@ -10,6 +11,7 @@
             Paragraph = 3
         }
 
+        //todo: prob wants a better name, what is this?
         public enum NewTagType
         {
             Parent = 0,
