@@ -6,12 +6,8 @@ namespace MarkdownToHTML
 {
     public class MarkdownParserException : Exception
     {
-        public MarkdownParserException(string input, string message) : base("Could not parse " + input + 
-                                                                            Environment.NewLine + 
-                                                                            message)
+        public MarkdownParserException(string input, string message) : base($"Could not parse {input}{Environment.NewLine}{message}")
         {
-
         }
-
     }
 }

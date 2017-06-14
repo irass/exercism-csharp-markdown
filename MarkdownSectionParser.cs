@@ -5,8 +5,12 @@ using static MarkdownToHTML.Constants;
 
 namespace MarkdownToHTML
 {
+    // todo: interesting general case solution. 
+    // This class is longer than ideal.
+    // I think that it would probably be easier to understand and debug and extend if the solution was more specific.
     public class MarkdownSectionParser
     {
+        // I would remove the "private" keywords throughout to improve the signal to noise ratio
         private readonly string _markdownInput;
         private string _openWordTag;
         private string _openLineTag;
@@ -23,9 +27,13 @@ namespace MarkdownToHTML
             _parentTagExists = parentTagExists;
         }
 
+        public MarkdownSectionParser(string markdownInput) : this(markdownInput, string.Empty, string.Empty, string.Empty, false)
+        {
+        }
 
         private string ParseNextSection(int startingIndex, NewTagType newTagType, string tagToInsert, string currentLineTag)
         {
+            // todo: in try / except, it is best to have just one line of code in the try and one in the except, ie, by create another method
             try
             {
                 string nextSection = GetNextSection(_markdownInput, startingIndex);
@@ -60,6 +68,7 @@ namespace MarkdownToHTML
         //if a new tag has been inserted - close any previous tags if applicable and parse beyond
         private string DealWithOpeningTag(string result, int currentIndex, int lengthToSkip, NewTagType newTagType, string stringToInsert)
         {
+            //todo: a method should all be at the same level of abstraction ideally. This one mixes some higher level concepts (ParseNextSection) and some lower ones (_parentTagExists)
             if (newTagType == NewTagType.Parent)
                 _parentTagExists = true;
 
@@ -82,7 +91,7 @@ namespace MarkdownToHTML
             return result;
         }
 
-
+        // todo: methods should generally have just one control structure (try / except, loop, conditional) and method calls. This was the control logic stands out and is obvious, and is not confused by the non control logic
         public string Parse()
         {
             string result = string.Empty;
